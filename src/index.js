@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-mongoose.connect('mongodb+srv://urrriy:ura_2702@exam.lpubpvu.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect(process.env.CONNECTION_URL);
 
 app.use(router);
 
