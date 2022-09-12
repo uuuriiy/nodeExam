@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 // Connection URL
-const url = "mongodb+srv://urrriy:<ura_2702>@exam.lpubpvu.mongodb.net/?retryWrites=true&w=majority";
+const url = "mongodb+srv://urrriy:ura_2702@exam.lpubpvu.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(url);
 
 // Database Name
