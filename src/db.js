@@ -1,9 +1,7 @@
 const { MongoClient } = require('mongodb');
-// or as an es module:
-// import { MongoClient } from 'mongodb'
 
 // Connection URL
-const url = 'mongodb://0.0.0.0:27017/';
+const url = "mongodb+srv://urrriy:<ura_2702>@exam.lpubpvu.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(url);
 
 // Database Name
@@ -16,8 +14,6 @@ async function main() {
   const db = client.db(dbName);
   db.collection('users');
   db.collection('exercises');
-
-  // the following code examples can be pasted here...
 
   return 'done.';
 }

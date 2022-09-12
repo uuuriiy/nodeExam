@@ -1,8 +1,7 @@
 const { ExerciseModel } = require('../database/Exercise');
-const ErrorHandler = require('../errors');
 
 
-module.exports = async(req, res, next) => {
+const exerciseMiddleware = async(req, res, next) => {
     try {
         const exercise = req.body;
         const exerciseMock = new ExerciseModel(exercise);
@@ -25,3 +24,5 @@ module.exports = async(req, res, next) => {
         next();
     }
 }
+
+module.exports = exerciseMiddleware;

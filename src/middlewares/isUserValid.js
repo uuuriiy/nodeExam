@@ -1,7 +1,7 @@
 const { UserModel } = require('../database/User');
 
 
-module.exports = async(req, res, next) => {
+const userMiddleware = async(req, res, next) => {
     try {
         const user = req.body;
         const userMock = new UserModel(user);
@@ -24,3 +24,5 @@ module.exports = async(req, res, next) => {
         next();
     }
 }
+
+module.exports = userMiddleware;
