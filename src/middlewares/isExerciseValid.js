@@ -8,11 +8,20 @@ module.exports = async(req, res, next) => {
         const exerciseMock = new ExerciseModel(exercise);
 
         exerciseMock.validate(err => {
-            if (err) return next(new ErrorHandler(`${err.name}: ${err.message}`, 400))
+            if (err) {
+                const handledError = err.message.split(":");
+
+                return next(res.status(400).json({ 
+                    success: false, 
+                    message: handledError.slice(1, handledError.length).join(":")
+                }))
+            }
         })
 
         next();
     } catch (e) {
-        next(e);
+        res.status(400).json({ success: false, message: e.message });
+
+        next();
     }
 }

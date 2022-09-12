@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
+const { descriptionValidator, logsArrayValidator } = require('../validators/index');
+
 const logsSchema = new mongoose.Schema({
-    id: Number,
+    id: {
+        type: Number,
+        unique: true
+    },
     logs: {
         type: [{
             id: {
@@ -11,6 +16,7 @@ const logsSchema = new mongoose.Schema({
             description: {
                 type: String,
                 min: [4, 'Must be at least 4, got {VALUE}'],
+                validate: descriptionValidator
               },
               duration: {
                 type: Number,
@@ -21,12 +27,12 @@ const logsSchema = new mongoose.Schema({
                 require: false
               }
         }],
-        validate: arr => Array.isArray(arr) && arr.length > 0,
+        validate: logsArrayValidator,
         required: true
     },
     count: {
         type: Number,
-        required: true
+        required: true,
     }
 }, { _id: false});
 

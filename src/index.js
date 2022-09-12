@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
+
 const router = require('./routes');
 
 app.use(cors());
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 });
 
 mongoose.connect('mongodb://0.0.0.0:27017/');
+
 app.use(router);
 
 const listener = app.listen(process.env.PORT || 3000, () => {

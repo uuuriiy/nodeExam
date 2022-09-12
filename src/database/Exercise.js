@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
+const { descriptionValidator } = require('../validators/index');
+
+
 const exerciseSchema = new mongoose.Schema({
   userId: Number,
-  exerciseId: Number,
+  exerciseId: {
+    type: Number,
+    unique: true
+},
   description: {
     type: String,
     minlength: 4,
+    validate: descriptionValidator
   },
   duration: {
     type: Number,

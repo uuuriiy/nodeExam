@@ -7,6 +7,7 @@ module.exports = {
   getAll: async () => await UserModel.find({}),
   create: async (user) => await UserModel.insertMany([user]),
   createExercise: async (userId, exercise) => await ExerciseModel.insertMany([{userId, ...exercise}]),
+  getExercises: async (id) => await ExerciseModel.find({id}),
   createLogs: async (id, exercises) => 
     await LogsModel.insertMany([{id, logs: [...exercises], count: exercises.length}]),
   getLogs: async (id) => await LogsModel.find({id}),

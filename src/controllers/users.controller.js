@@ -1,5 +1,6 @@
 const usersService = require('../services/users.service');
 const ErrorHandler = require('../errors/index');
+const { errorHandler } = require('../utils/index');
 
 module.exports = {
   getUsers: async (req, res, next) => {
@@ -23,7 +24,9 @@ module.exports = {
 
       res.sendStatus(200);
     } catch (e) {
-      next(e);
+      res.status(400).json({ success: false, message: errorHandler(e.message)});
+      
+      next();
     }
   },
   addExercise: async (req, res, next) => {
@@ -35,7 +38,7 @@ module.exports = {
       if (!date) exercise.date = new Date();
 
       const isExerciseCreated = await usersService.createExercise(+_id, exercise);
-      const exercises = await usersService.getExercise(+_id);
+      const exercises = await usersService.getExercises(+_id);
       const logs = await usersService.getLogs(+_id);
 
       if (!logs.length) await usersService.createLogs(+_id, exercises);
@@ -46,7 +49,9 @@ module.exports = {
 
       res.sendStatus(200);
     } catch (e) {
-      next(e);
+      res.status(400).json({ success: false, message: errorHandler(e.message)});
+
+      next();
     }
   },
   getLogs: async (req, res, next) => {
