@@ -26,7 +26,7 @@ const exercicesAndLogsController = {
             res.json({ success: false, message: errorHandler(err.message)});
           } else {
             console.log('you saved exercises');
-            res.sendStatus(200);
+            res.status(200).json({ success: true, data: exerciseMock});
           }
         });
         
@@ -40,7 +40,6 @@ const exercicesAndLogsController = {
           await logsMock.save((err) => {
           if(err){
             res.json({ success: false, message: errorHandler(err.message)});
-            // console.log(err);
           } else {
             console.log('you saved logs');
           }

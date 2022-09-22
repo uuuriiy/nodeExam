@@ -26,7 +26,7 @@ const usersController = {
 
       if (!isUserCreated) return next(new ErrorHandler(400));
 
-      res.sendStatus(200);
+      res.status(200).json({ success: true, data: {id, ...user}});
     } catch (e) {
       res.status(400).json({ success: false, message: errorHandler(e.message)});
       
