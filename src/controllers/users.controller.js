@@ -17,8 +17,12 @@ const usersController = {
   addUser: async (req, res, next) => {
     try {
       const user = req.body;
+      let id = 1;
+      const users = await usersService.getAll();
 
-      const isUserCreated = await usersService.create(user);
+      if(users.length) id = users.length + 1;
+
+      const isUserCreated = await usersService.create({id, ...user});
 
       if (!isUserCreated) return next(new ErrorHandler(400));
 
@@ -29,6 +33,9 @@ const usersController = {
       next();
     }
   },
+  deleteUsers: async() => {
+    await usersService.delete()
+  }
 };
 
 

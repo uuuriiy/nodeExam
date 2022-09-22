@@ -9,7 +9,7 @@ const logsSchema = new mongoose.Schema({
     },
     logs: {
         type: [{
-            id: {
+            exerciseId: {
                 type: Number,
                 unique: true
             },
@@ -34,7 +34,7 @@ const logsSchema = new mongoose.Schema({
         type: Number,
         required: true,
     }
-}, { _id: false});
+});
 
 const LogsModel = mongoose.model('Logs', logsSchema);
 

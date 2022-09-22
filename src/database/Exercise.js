@@ -22,7 +22,7 @@ const exerciseSchema = new mongoose.Schema({
     type: Date,
     require: false
   },
-}, { _id: false});
+});
 
 const ExerciseModel = mongoose.model('Exercises', exerciseSchema);
 
