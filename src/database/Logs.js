@@ -4,14 +4,12 @@ const { descriptionValidator, logsArrayValidator } = require('../validators/inde
 
 const logsSchema = new mongoose.Schema({
     id: {
-        type: Number,
-        unique: true
+        type: Number
     },
     logs: {
         type: [{
             exerciseId: {
-                type: Number,
-                unique: true
+                type: Number
             },
             description: {
                 type: String,

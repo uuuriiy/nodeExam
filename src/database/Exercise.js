@@ -4,10 +4,11 @@ const { descriptionValidator } = require('../validators/index');
 
 
 const exerciseSchema = new mongoose.Schema({
-  userId: Number,
+  userId: {
+    type: Number
+  },
   exerciseId: {
-    type: Number,
-    unique: true
+    type: Number
 },
   description: {
     type: String,

@@ -19,9 +19,7 @@ const exerciseMiddleware = async(req, res, next) => {
 
         next();
     } catch (e) {
-        res.status(400).json({ success: false, message: e.message });
-
-        next();
+        next(res.status(400).json({ success: false, message: e.message }));
     }
 }
 

@@ -3,7 +3,7 @@ const { LogsModel } = require('../database/Logs');
 const exercisesService = require('../services/exercises.service');
 const logsService = require('../services/logs.service');
 const ErrorHandler = require('../errors/index');
-const errorHandler = require('../utils/index');
+const generateUniqueId = require('generate-unique-id');
 
 const exercicesAndLogsController = {
     addExercise: async (req, res, next) => {
@@ -11,19 +11,20 @@ const exercicesAndLogsController = {
         const { _id } = req.params;
         const exercise = req.body;
         const { date } = exercise;
-        const exercisesAll = await exercisesService.getExercises();
-        exercise.exerciseId = 1;
+        const exerciseId = generateUniqueId({
+          length: 3,
+          useLetters: false
+        });
+        exercise.exerciseId = +exerciseId;
         
         if (!date) exercise.date = new Date();
-
-        if(exercisesAll.length) exercise.exerciseId = exercisesAll.length + 1;
         
         ExerciseModel.init();
         const exerciseMock = new ExerciseModel({userId: +_id, ...exercise});
         
         await exerciseMock.save((err) => {
           if(err){
-            res.json({ success: false, message: errorHandler(err.message)});
+            console.log(err);
           } else {
             console.log('you saved exercises');
             res.status(200).json({ success: true, data: exerciseMock});
@@ -37,31 +38,30 @@ const exercicesAndLogsController = {
           LogsModel.init();
           const logsMock = new LogsModel({id: +_id, logs: [...exercises], count: exercises.length});
 
-          await logsMock.save((err) => {
-          if(err){
-            res.json({ success: false, message: errorHandler(err.message)});
-          } else {
-            console.log('you saved logs');
-          }
-        });
+          logsMock.save((err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('you saved logs');
+            }
+          });
+        } else {
+          return await logsService.updateLogs(+_id, exercises);
         }
 
-        await logsService.updateLogs(+_id, exercises, exercise);
-
       } catch (e) {
-        res.status(400).json({ success: false, message: errorHandler(e.message)});
-  
-        next();
+        next(e);
       }
     },
     getLogs: async (req, res, next) => {
         try {
           const { _id } = req.params;
-          const logs = await logsService.getLogs(+_id);
+
+        const logs = await logsService.getLogs(+_id);
     
-          if (!logs) return next(new ErrorHandler(404));
+        if (!logs) return next(new ErrorHandler(404));
     
-          res.json(logs);
+        res.json(logs);
         } catch (e) {
           next(e);
         }

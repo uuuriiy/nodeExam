@@ -1,11 +1,12 @@
 const usersService = require('../services/users.service');
 const ErrorHandler = require('../errors/index');
 const errorHandler = require('../utils/index');
+const generateUniqueId = require('generate-unique-id');
 
 const usersController = {
   getUsers: async (req, res, next) => {
     try {
-      const users = await usersService.getAll();
+      const users = await usersService.getUsers();
 
       if (!users) return next(new Error(404));
 
@@ -17,16 +18,15 @@ const usersController = {
   addUser: async (req, res, next) => {
     try {
       const user = req.body;
-      let id = 1;
-      const users = await usersService.getAll();
-
-      if(users.length) id = users.length + 1;
-
-      const isUserCreated = await usersService.create({id, ...user});
+      const userId = generateUniqueId({
+        length: 3,
+        useLetters: false
+      });
+      const isUserCreated = await usersService.create({id: +userId, ...user});
 
       if (!isUserCreated) return next(new ErrorHandler(400));
 
-      res.status(200).json({ success: true, data: {id, ...user}});
+      res.status(200).json({ success: true, data: {id: +userId, ...user}});
     } catch (e) {
       res.status(400).json({ success: false, message: errorHandler(e.message)});
       

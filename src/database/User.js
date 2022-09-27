@@ -10,8 +10,7 @@ const usersSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        unique: true,
-        required: [true, "Username is required !"],
+        required: [true, "Username is required!"],
         validate: userNameValidator
     }
 }, { _id: false});
