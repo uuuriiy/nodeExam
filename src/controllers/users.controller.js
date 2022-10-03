@@ -1,14 +1,14 @@
 const usersService = require('../services/users.service');
 const ErrorHandler = require('../errors/index');
-const errorHandler = require('../utils/index');
 const generateUniqueId = require('generate-unique-id');
 
 const usersController = {
   getUsers: async (req, res, next) => {
     try {
-      const users = await usersService.getUsers();
+      const { limit } = req.query;
+      const users = await usersService.getUsers(limit);
 
-      if (!users) return next(new Error(404));
+      if (!users) return next(new ErrorHandler(404));
 
       res.json(users);
     } catch (e) {
@@ -19,7 +19,7 @@ const usersController = {
     try {
       const user = req.body;
       const userId = generateUniqueId({
-        length: 3,
+        length: 20,
         useLetters: false
       });
       const isUserCreated = await usersService.create({id: +userId, ...user});
@@ -28,9 +28,7 @@ const usersController = {
 
       res.status(200).json({ success: true, data: {id: +userId, ...user}});
     } catch (e) {
-      res.status(400).json({ success: false, message: errorHandler(e.message)});
-      
-      next();
+      next(e);
     }
   },
   deleteUsers: async() => {

@@ -12,9 +12,10 @@
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.16.4",
-		"mongodb": "^4.8.1",
-		"mongoose": "^6.5.2",
-		"nodemon": "^2.0.19"
+		"mongodb": "^4.10.0",
+		"mongoose": "^6.6.2",
+		"nodemon": "^2.0.19",
+		"generate-unique-id": "^2.0.1"
 	},
 	"devDependencies": {
 		"@types/node": "^18.7.4"

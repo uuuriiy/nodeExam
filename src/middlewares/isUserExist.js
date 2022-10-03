@@ -6,7 +6,7 @@ const usersMiddleware = async(req, res, next) => {
 
         const user = await usersService.getUserById(+_id);
 
-        if(!user.length) return next(res.status(404).json({message: "userId is not correct"}));
+        if(!user.length) return res.status(404).json({message: "userId is not correct"});
 
         next();
     } catch (e) {

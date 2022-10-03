@@ -3,7 +3,7 @@ const urlMiddleware = async(req, res, next) => {
         const url = req.url;
         const urlRegExp = /\d/;
 
-        if(!urlRegExp.test(url)) return next(res.status(404).json({message: "userId is required"}))
+        if(!urlRegExp.test(url)) return res.status(404).json({message: "userId is required"})
 
         next();
     } catch (e) {
