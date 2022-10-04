@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { descriptionValidator, logsArrayValidator } = require('../validators/index');
+const { descriptionValidator, logsArrayValidator, dateValidator } = require('../validators/index');
 
 const logsSchema = new mongoose.Schema({
     id: {
@@ -21,8 +21,9 @@ const logsSchema = new mongoose.Schema({
                 required: true,
               },
               date: {
-                type: Date,
-                require: false
+                type: String,
+                require: false,
+                validate: dateValidator
               }
         }],
         validate: logsArrayValidator,

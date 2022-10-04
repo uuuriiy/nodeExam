@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { descriptionValidator } = require('../validators/index');
+const { descriptionValidator, dateValidator } = require('../validators/index');
 
 
 const exerciseSchema = new mongoose.Schema({
@@ -20,8 +20,9 @@ const exerciseSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: Date,
-    require: false
+    type: String,
+    require: false,
+    validate: dateValidator
   },
 });
 

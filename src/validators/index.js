@@ -1,10 +1,10 @@
 const userNameValidator = {
-    validator: (el) => el.match(/^[A-Za-z]+$/),
+    validator: username => username.match(/^[A-Za-z]+$/),
     message: 'Name should contain only letters',
 } 
 
 const descriptionValidator = {
-    validator: (el) => el.length > 3,
+    validator: desc => desc.length > 3,
     message: 'Description should contain more than 3 letters',
 }
 
@@ -13,7 +13,12 @@ const logsArrayValidator = {
     message: 'Logs array should not be empty',
 }
 
+const dateValidator = {
+    validator: date => date.split("-")[3] === new Date(date).getDay(),
+    message: 'Date is not correct',
+}
+
 module.exports = {
     userNameValidator, descriptionValidator,
-    logsArrayValidator
+    logsArrayValidator, dateValidator
 }
