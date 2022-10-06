@@ -14,7 +14,7 @@ const logsArrayValidator = {
 }
 
 const dateValidator = {
-    validator: date => date.split("-")[3] === new Date(date).getDay(),
+    validator: date => !isNaN(Date.parse(date)),
     message: 'Date is not correct',
 }
 

@@ -5,8 +5,7 @@ const generateUniqueId = require('generate-unique-id');
 const usersController = {
   getUsers: async (req, res, next) => {
     try {
-      const { limit } = req.query;
-      const users = await usersService.getUsers(limit);
+      const users = await usersService.getUsers();
 
       if (!users) return next(new ErrorHandler(404));
 
