@@ -24,7 +24,7 @@ const getLogsQueryFrom = async (id, from) => await LogsModel.aggregate([
       logs: {
         $filter: {
           input: '$logs', as: 'item',
-          cond: { $gte: ['$$item.date', new Date(from)] }
+          cond: { $gte: ['$$item.date', from] }
         }
       }}},
       { $unwind: '$logs' }, { $sort: {'logs.date': 1} },
@@ -41,7 +41,7 @@ const getLogsQueryFromWithLimit = async (id, from, limit) => await LogsModel.agg
       logs: {
         $filter: {
           input: '$logs', as: 'item',
-          cond: { $gte: ['$$item.date', new Date(from)] }
+          cond: { $gte: ['$$item.date', from] }
         }
       }}},
       { $unwind: '$logs' }, { $sort: {'logs.date': 1} },
@@ -61,8 +61,8 @@ const getLogsQueryFromAndTo = async (id, from, to) => await LogsModel.aggregate(
           input: '$logs', as: 'item',
           cond: {
             $and: [
-              {$gte: ['$$item.date', new Date(from)]},
-              {$lte: ['$$item.date', new Date(to)]}
+              {$gte: ['$$item.date', from]},
+              {$lte: ['$$item.date', to]}
             ]
           }
         }
@@ -83,8 +83,8 @@ const getLogsQueryFromAndToWithLimit = async (id, from, to, limit) => await Logs
           input: '$logs', as: 'item',
           cond: {
             $and: [
-              {$gte: ['$$item.date', new Date(from)]},
-              {$lte: ['$$item.date', new Date(to)]}
+              {$gte: ['$$item.date', from]},
+              {$lte: ['$$item.date', to]}
             ]
           }
         }
